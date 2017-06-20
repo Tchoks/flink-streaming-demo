@@ -55,8 +55,8 @@ object SlidingArrivalCount {
     val earlyCountThreshold = 50
 
     // Elasticsearch parameters
-    val writeToElasticsearch = false // set to true to write results to Elasticsearch
-    val elasticsearchHost = "" // look-up hostname in Elasticsearch log output
+    val writeToElasticsearch = true // set to true to write results to Elasticsearch
+    val elasticsearchHost = "_uEU2PK" // look-up hostname in Elasticsearch log output
     val elasticsearchPort = 9300
 
 

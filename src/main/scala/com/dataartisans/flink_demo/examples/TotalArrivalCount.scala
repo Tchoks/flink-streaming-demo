@@ -37,6 +37,9 @@ import org.apache.flink.streaming.api.scala._
  * for more detail.
  *
  */
+
+
+
 object TotalArrivalCount {
 
   def main(args: Array[String]) {
@@ -47,8 +50,8 @@ object TotalArrivalCount {
     val servingSpeedFactor = 600f
 
     // Elasticsearch parameters
-    val writeToElasticsearch = false // set to true to write results to Elasticsearch
-    val elasticsearchHost = "" // look-up hostname in Elasticsearch log output
+    val writeToElasticsearch = true // set to true to write results to Elasticsearch
+    val elasticsearchHost = "10.177.13.179" // look-up hostname in Elasticsearch log output
     val elasticsearchPort = 9300
 
 
@@ -89,6 +92,7 @@ object TotalArrivalCount {
 
     if (writeToElasticsearch) {
       // write to Elasticsearch
+      System.out.println("Write to elasticsearch")
       cntByLocation
         .addSink(new CntTimeByLocUpsert(elasticsearchHost, elasticsearchPort))
     }
@@ -101,9 +105,11 @@ object TotalArrivalCount {
     extends ElasticsearchUpsertSink[(Int, Long, GeoPoint, Int)](
       host,
       port,
-      "elasticsearch",
+      "elasticsearch"/*"fbnlog2"*/,
       "nyc-idx",
       "popular-locations") {
+
+    System.out.println("host: " + host + " port: " + port)
 
     override def insertJson(r: (Int, Long, GeoPoint, Int)): Map[String, AnyRef] = {
       Map(
